@@ -79,7 +79,12 @@ endif
 
 ifeq (linux,$(OS))
 CSTDFLAG += -D_GNU_SOURCE
+ifeq (android,$(host))
+LDFLAGS+=-ldl
+OBJS += src/unix/android.o
+else
 LDFLAGS+=-ldl -lrt
+endif
 RUNNER_CFLAGS += -D_GNU_SOURCE
 OBJS += src/unix/linux-core.o \
         src/unix/linux-inotify.o \
@@ -117,10 +122,12 @@ LDFLAGS+=
 OBJS += src/unix/cygwin.o
 endif
 
+ifneq (android,$(host))
 ifeq (sunos,$(OS))
 RUNNER_LDFLAGS += -pthreads
 else
 RUNNER_LDFLAGS += -pthread
+endif
 endif
 
 libuv.a: $(OBJS)

@@ -43,6 +43,10 @@
 # define close _close
 #endif
 
+#if defined(__ANDROID__)
+#include "../src/unix/android.h"
+#endif
+
 #define TOO_LONG_NAME_LENGTH 65536
 #define PATHMAX 1024
 
@@ -559,7 +563,7 @@ static void check_utime(const char* path, double atime, double mtime) {
 #elif !defined(_POSIX_C_SOURCE) || defined(_DARWIN_C_SOURCE)
   ASSERT(s->st_atimespec.tv_sec  == atime);
   ASSERT(s->st_mtimespec.tv_sec  == mtime);
-#else
+#elif !defined(__ANDROID__)
   ASSERT(s->st_atim.tv_sec  == atime);
   ASSERT(s->st_mtim.tv_sec  == mtime);
 #endif

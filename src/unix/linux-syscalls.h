@@ -33,6 +33,10 @@
 #define UV__O_NONBLOCK        0x800
 #define UV__O_CLOEXEC         0x80000
 
+#if defined(__ANDROID__)
+#include "android.h"
+#endif
+
 #define UV__EFD_CLOEXEC       UV__O_CLOEXEC
 #define UV__EFD_NONBLOCK      UV__O_NONBLOCK
 

@@ -30,6 +30,10 @@
 #include <sys/time.h>
 #endif /* defined(__APPLE__) && defined(__MACH__) */
 
+#if defined(__ANDROID__)
+#include "android.h"
+#endif
+
 #undef NANOSEC
 #define NANOSEC ((uint64_t) 1e9)
 
@@ -266,7 +270,7 @@ int uv_sem_trywait(uv_sem_t* sem) {
 #endif /* defined(__APPLE__) && defined(__MACH__) */
 
 
-#if defined(__APPLE__) && defined(__MACH__)
+#if defined(__APPLE__) && defined(__MACH__) || defined(__ANDROID__)
 
 int uv_cond_init(uv_cond_t* cond) {
   if (pthread_cond_init(cond, NULL))
@@ -275,7 +279,7 @@ int uv_cond_init(uv_cond_t* cond) {
     return 0;
 }
 
-#else /* !(defined(__APPLE__) && defined(__MACH__)) */
+#else /* !(defined(__APPLE__) && defined(__MACH__)) || defined(__ANDROID__)*/
 
 int uv_cond_init(uv_cond_t* cond) {
   pthread_condattr_t attr;
@@ -301,7 +305,7 @@ error2:
   return -1;
 }
 
-#endif /* defined(__APPLE__) && defined(__MACH__) */
+#endif /* defined(__APPLE__) && defined(__MACH__) || defined(__ANDROID__) */
 
 void uv_cond_destroy(uv_cond_t* cond) {
   if (pthread_cond_destroy(cond))
@@ -328,7 +332,7 @@ int uv_cond_timedwait(uv_cond_t* cond, uv_mutex_t* mutex, uint64_t timeout) {
   int r;
   struct timespec ts;
 
-#if defined(__APPLE__) && defined(__MACH__)
+#if defined(__APPLE__) && defined(__MACH__) || defined(__ANDROID__)
   ts.tv_sec = timeout / NANOSEC;
   ts.tv_nsec = timeout % NANOSEC;
   r = pthread_cond_timedwait_relative_np(cond, mutex, &ts);

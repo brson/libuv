@@ -124,6 +124,14 @@ typedef struct {
   uv_sem_t turnstile2;
 } uv_barrier_t;
 
+#elif defined(__ANDROID__)
+
+typedef struct {
+  pthread_mutex_t mutex;
+  pthread_cond_t cond;
+  unsigned count;
+} uv_barrier_t;
+
 #else /* defined(__APPLE__) && defined(__MACH__) */
 
 typedef pthread_barrier_t uv_barrier_t;
