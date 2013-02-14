@@ -30,7 +30,9 @@ TEST_IMPL(dlerror) {
   uv_lib_t lib;
   int r;
 
-#ifdef __linux__
+#if defined (__ANDROID__)
+  const char* dlerror_desc = "is not a valid ELF object";
+#elif defined (__linux__)
   const char* dlerror_desc = "file too short";
 #elif defined (__sun__)
   const char* dlerror_desc = "unknown file type";
@@ -40,7 +42,15 @@ TEST_IMPL(dlerror) {
   const char* dlerror_desc = "";
 #endif
 
+#if defined (__ANDROID__)
+  char cwd[1024];
+  char apath[1024];
+  getcwd(cwd, 1024);
+  sprintf(apath, "%s/%s", cwd, path);
+  r = uv_dlopen(apath, &lib);
+#else
   r = uv_dlopen(path, &lib);
+#endif
   ASSERT(r == -1);
 
   msg = uv_dlerror(&lib);
