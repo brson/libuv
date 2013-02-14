@@ -44,10 +44,12 @@ void platform_init(int argc, char **argv) {
   const char* var = getenv("UV_RUN_AS_ROOT");
 
   /* Running the tests as root is not smart - don't do it. */
+#if !defined(__ANDROID__)
   if (getuid() == 0 && (var == NULL || atoi(var) <= 0)) {
     fprintf(stderr, "Running the tests as root is not safe.\n");
     exit(1);
   }
+#endif
 
   /* Disable stdio output buffering. */
   setvbuf(stdout, NULL, _IONBF, 0);
