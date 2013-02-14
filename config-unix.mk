@@ -141,7 +141,8 @@ include/uv-private/uv-unix.h: \
 	include/uv-private/uv-bsd.h \
 	include/uv-private/uv-darwin.h \
 	include/uv-private/uv-linux.h \
-	include/uv-private/uv-sunos.h
+	include/uv-private/uv-sunos.h \
+	include/uv-private/uv-android.h
 
 src/unix/internal.h: src/unix/linux-syscalls.h
 

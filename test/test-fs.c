@@ -43,10 +43,6 @@
 # define close _close
 #endif
 
-#if defined(__ANDROID__)
-#include "../src/unix/android.h"
-#endif
-
 #define TOO_LONG_NAME_LENGTH 65536
 #define PATHMAX 1024
 

@@ -35,10 +35,6 @@
 # endif
 #endif
 
-#if defined(__ANDROID__)
-#include "../src/unix/android.h"
-#endif
-
 static uv_fs_event_t fs_event;
 static uv_timer_t timer;
 static int timer_cb_called = 0;

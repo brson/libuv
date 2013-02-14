@@ -30,10 +30,6 @@
 #include <sys/time.h>
 #endif /* defined(__APPLE__) && defined(__MACH__) */
 
-#if defined(__ANDROID__)
-#include "android.h"
-#endif
-
 #undef NANOSEC
 #define NANOSEC ((uint64_t) 1e9)
 

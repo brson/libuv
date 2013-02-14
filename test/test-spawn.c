@@ -30,10 +30,6 @@
 #include <unistd.h>
 #endif
 
-#if defined(__ANDROID__)
-#include "../src/unix/android.h"
-#endif
-
 static int close_cb_called;
 static int exit_cb_called;
 static uv_process_t process;

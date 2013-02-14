@@ -1,6 +1,6 @@
-#include "android.h"
-
 #if defined(__ANDROID__)
+
+#include <uv-unix.h>
 
 int pthread_barrier_init(pthread_barrier_t* barrier,
 		const void* barrier_attr,

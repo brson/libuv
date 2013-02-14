@@ -41,6 +41,10 @@
 #include <pthread.h>
 #include <signal.h>
 
+#if defined(__ANDROID__)
+# include "uv-android.h"
+#endif
+
 struct uv__io_s;
 struct uv_loop_s;
 
@@ -112,7 +116,6 @@ typedef pthread_mutex_t uv_mutex_t;
 typedef pthread_rwlock_t uv_rwlock_t;
 typedef UV_PLATFORM_SEM_T uv_sem_t;
 typedef pthread_cond_t uv_cond_t;
-
 
 #if defined(__APPLE__) && defined(__MACH__)
 
