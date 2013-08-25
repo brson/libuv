@@ -334,9 +334,9 @@ static int uv__bind(uv_udp_t* handle,
    * misnomer but then again, SO_REUSEADDR was already taken.
    *
    * None of the above applies to Linux: SO_REUSEADDR implies SO_REUSEPORT on
-   * Linux and hence it does not have SO_REUSEPORT at all.
+   * Linux (and Linux < 3.9 doesn't have a separate SO_REUSEPORT).
    */
-#ifdef SO_REUSEPORT
+#if !defined(__linux__) && defined(SO_REUSEPORT)
   yes = 1;
   if (setsockopt(fd, SOL_SOCKET, SO_REUSEPORT, &yes, sizeof yes) == -1) {
     uv__set_sys_error(handle->loop, errno);
@@ -505,9 +505,9 @@ int uv_udp_open(uv_udp_t* handle, uv_os_sock_t sock) {
    * misnomer but then again, SO_REUSEADDR was already taken.
    *
    * None of the above applies to Linux: SO_REUSEADDR implies SO_REUSEPORT on
-   * Linux and hence it does not have SO_REUSEPORT at all.
+   * Linux (and Linux < 3.9 doesn't have a separate SO_REUSEPORT).
    */
-#ifdef SO_REUSEPORT
+#if !defined(__linux__) && defined(SO_REUSEPORT)
   yes = 1;
   if (setsockopt(sock, SOL_SOCKET, SO_REUSEPORT, &yes, sizeof yes) == -1) {
     uv__set_sys_error(handle->loop, errno);
